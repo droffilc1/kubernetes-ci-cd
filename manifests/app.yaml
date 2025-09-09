@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   source:
-    repoURL: git@github.com:droffilc1/kubernetes-ci-cd.git
+    repoURL: https://github.com/droffilc1/kubernetes-ci-cd.git
     targetRevision: main
     path: manifests
   destination:
