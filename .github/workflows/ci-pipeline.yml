@@ -21,9 +21,12 @@ jobs:
       - name: Run Tests
         run: npm test
 
-      - name: Build and Push Docker Image
+      - name: Log in to DockerHub
+        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Build and Push
         run: |
-          docker build -t droffilc1/current-time-api:${{ github.sha }} .
-          docker tag droffilc1/current-time-api:${{ github.sha }} droffilc1/current-time-api:latest
-          docker push droffilc1/current-time-api:${{ github.sha }}
-          docker push droffilc1/current-time-api:latest
+          IMAGE="droffilc1/current-time-api"
+          TAG_SHA="${{ github.sha }}"
+          docker build -t $IMAGE:$TAG_SHA -t $IMAGE:latest .
+          docker push $IMAGE --all-tags
