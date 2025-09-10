@@ -23,6 +23,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t droffilc1/current-time-api:${{ github.sha }} -t droffilc1/current-time-api:latest .
-          echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-          docker push droffilc1/current-time-api --all-tags
+          docker build -t droffilc1/current-time-api:${{ github.sha }} .
+          docker tag droffilc1/current-time-api:${{ github.sha }} droffilc1/current-time-api:latest
+          docker push droffilc1/current-time-api:${{ github.sha }}
+          docker push droffilc1/current-time-api:latest
