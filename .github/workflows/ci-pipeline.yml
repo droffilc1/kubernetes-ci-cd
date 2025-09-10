@@ -22,11 +22,8 @@ jobs:
         run: npm test
 
       - name: Build and Push Docker Image
-        uses: cloudposse/github-action-docker-build-push@main
-        with:
-          registry: registry.hub.docker.com
-          organization: "${{ github.repository_owner }}"
-          repository: "${{ github.event.repository.name }}"
-          login: "${{ secrets.DOCKERHUB_USERNAME }}"
-          password: "${{ secrets.DOCKERHUB_PASSWORD }}"
-          platforms: linux/amd64,linux/arm64
+        run: |
+          docker build -t droffilc1/current-time-api:${{ github.sha }} .
+          docker tag droffilc1/current-time-api:${{ github.sha }} droffilc1/current-time-api:latest
+          docker push droffilc1/current-time-api:${{ github.sha }}
+          docker push droffilc1/current-time-api:latest
